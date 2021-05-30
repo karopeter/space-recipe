@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,8 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
 import { RecipesModule } from './recipes/recipes.module';
 import { LoggingService } from './logging.service';
+import { shoppingListReducer  } from './shopping-list/store/shopping-list.reducer';
+import { reducers } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -32,14 +35,16 @@ import { LoggingService } from './logging.service';
     PlaceholderDirective
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     FormsModule,
+    StoreModule.forRoot(reducers),
     ReactiveFormsModule,
     HttpClientModule,
     RecipesModule
   ],
-  providers: [ShoppingListService, RecipeService, LoggingService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [ShoppingListService, RecipeService,
+     LoggingService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent],
   entryComponents: [AlertComponent]
 })
