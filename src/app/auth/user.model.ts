@@ -4,7 +4,7 @@ export class User {
 
 // get token() {
 //   if (!this.tokenExpirationDate || new Date() > this.tokenExpirationDate) {
-//     return null;
+//     return null as any;
 //   }
 //   return this.token;
 // }

@@ -20,7 +20,7 @@ import { PlaceholderDirective } from './shared/placeholder/placeholder.directive
 import { RecipesModule } from './recipes/recipes.module';
 import { LoggingService } from './logging.service';
 import { shoppingListReducer  } from './shopping-list/store/shopping-list.reducer';
-import { reducers } from './app.reducer';
+import * as fromApp from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { reducers } from './app.reducer';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(fromApp.reducers),
     ReactiveFormsModule,
     HttpClientModule,
     RecipesModule
