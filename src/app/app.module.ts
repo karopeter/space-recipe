@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { RecipesModule } from './recipes/recipes.module';
 import { LoggingService } from './logging.service';
 import { shoppingListReducer  } from './shopping-list/store/shopping-list.reducer';
 import * as fromApp from './app.reducer';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import * as fromApp from './app.reducer';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot(fromApp.reducers),
+    EffectsModule.forRoot([AuthEffects]),
     ReactiveFormsModule,
     HttpClientModule,
     RecipesModule
