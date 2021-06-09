@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
+import * as AuthActions from './../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,6 @@ export class HeaderComponent implements OnInit {
     this.userSub = this.store.select('auth').pipe(map(authState => authState.user)).subscribe(user => {
       this.isAuthenticated = !!user;
       console.log(!user);
-      console.log(!!user);
     });
   }
 
@@ -33,7 +33,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout(): void {
-    this.authService.logout();
+    // this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   }
 
   ngOnDestroy(): void {
