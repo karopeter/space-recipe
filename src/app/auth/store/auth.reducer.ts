@@ -41,7 +41,7 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         user: null as any,
         authError: action.payload,
         loading: false
-      };
+      }; 
     case AuthActions.CLEAR_ERROR:
       return {
         ...state,

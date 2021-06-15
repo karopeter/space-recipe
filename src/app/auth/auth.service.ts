@@ -63,7 +63,7 @@ export class AuthService {
       this.store.dispatch(new AuthActions.AuthenticateSuccess({
         email: loadedUser.email, userId: loadedUser.id, token: userData._token, expirationDate: new Date(userData.tokenExpirationDate)}));
        const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
-       this.autoLogout(expirationDuration);
+       this.setLogoutTimer(expirationDuration);
     }
   }
 
@@ -77,10 +77,17 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
-  autoLogout(expirationDuration: number): void {
+  setLogoutTimer(expirationDuration: number): void {
      this.tokenExpirationTimer = setTimeout(() => {
-        this.logout();
-      }, 2000);
+        this.store.dispatch(new AuthActions.Logout());
+      }, expirationDuration);
+  }
+
+  clearLogoutTimer(): void {
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null as any;
+    }
   }
 
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
@@ -88,7 +95,7 @@ export class AuthService {
     const user = new User(email, userId, token, expirationDate);
     // this.user.next(user);
     this.store.dispatch(new AuthActions.AuthenticateSuccess({email: email, userId: userId, token: token, expirationDate: expirationDate}));
-    this.autoLogout(expiresIn * 1000);
+    this.setLogoutTimer(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
