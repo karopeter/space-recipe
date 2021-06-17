@@ -6,13 +6,14 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
 import * as AuthActions from './../auth/store/auth.actions';
+import * as RecipesActions from './../recipes/store/recipe.actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private userSub!: Subscription;
   constructor(private dataStorageService: DataStorageService, private authService: AuthService, private store: Store<fromApp.AppState>) { }
@@ -26,10 +27,12 @@ export class HeaderComponent implements OnInit {
 
   onSaveData(): void {
      this.dataStorageService.storeRecipes();
+     this.store.dispatch(new RecipesActions.StoreRecipes());
   }
 
   onFetchData(): void {
     this.dataStorageService.fetchRecipes().subscribe();
+    this.store.dispatch(new RecipesActions.FetchRecipes());
   }
 
   onLogout(): void {
