@@ -41,7 +41,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     PlaceholderDirective
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot(fromApp.reducers),

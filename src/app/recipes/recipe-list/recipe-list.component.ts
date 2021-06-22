@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../app.reducer'
+import * as fromApp from '../../app.reducer';
 
 @Component({
   selector: 'app-recipe-list',
